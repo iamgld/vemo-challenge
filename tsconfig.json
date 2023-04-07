@@ -32,7 +32,13 @@
 			"@shared/interceptors": ["src/app/shared/interceptors/index.ts"],
 			"@shared/validators": ["src/app/shared/validators/index.ts"],
 			"@environment": ["src/environments/environment.ts"],
-			"@store/*": ["src/app/store/*"]
+			"@store/*": ["src/app/store/*"],
+			// Board paths
+			"@dashboard/views": ["src/app/modules/dashboard/views/index.ts"],
+			"@dashboard/components": ["src/app/modules/dashboard/components/index.ts"],
+			"@dashboard/models": ["src/app/modules/dashboard/models/index.ts"],
+			"@dashboard/services": ["src/app/modules/dashboard/services/index.ts"],
+			"@dashboard/modules": ["src/app/modules/dashboard/modules/index.ts"]
 		}
 	},
 	"angularCompilerOptions": {
