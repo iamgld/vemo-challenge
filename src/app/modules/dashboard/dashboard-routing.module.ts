@@ -7,6 +7,7 @@ import { HomeComponent } from '@dashboard/views'
 const routes: Routes = [
 	{
 		path: '',
+		title: 'VEMO - Home',
 		component: HomeComponent,
 	},
 ]
