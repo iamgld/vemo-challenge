@@ -1,5 +1,5 @@
-import { AuthState } from '@store/models'
+import { CountriesState } from '@store/models'
 
 export interface GlobalState {
-	auth: AuthState
+	countries: CountriesState
 }

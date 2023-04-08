@@ -1,17 +1,13 @@
-// Angular Imports
-import { environment } from '@environment'
 // Store Imports
-import { ActionReducerMap, MetaReducer } from '@ngrx/store'
+import { ActionReducerMap } from '@ngrx/store'
 import { GlobalState } from '@store/models'
 // Reducer Imports
-import { authReducer, initialAuthState } from './auth/auth.reducer'
+import { countriesReducer, initialCountriesState } from './countries/countries.reducer'
 
 export const globalState: GlobalState = {
-	auth: initialAuthState,
+	countries: initialCountriesState,
 }
 
 export const reducers: ActionReducerMap<GlobalState> = {
-	auth: authReducer,
+	countries: countriesReducer,
 }
-
-export const metaReducers: MetaReducer<GlobalState>[] = !environment.production ? [] : []

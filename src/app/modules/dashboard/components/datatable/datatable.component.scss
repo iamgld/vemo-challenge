@@ -1,0 +1,21 @@
+@use 'styles' as styles;
+
+.table {
+	min-height: 400px;
+}
+
+.flag {
+	&__image {
+		display: inline-block;
+		width: 120px;
+		height: 90px;
+		object-fit: cover;
+		border-radius: styles.radius(xs);
+	}
+}
+
+.td--center {
+	text-align: center;
+	padding: styles.spacing(xxs);
+	cursor: pointer;
+}

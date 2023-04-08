@@ -23,14 +23,6 @@ $breakPoints: (
 	xd: 1200px
 );
 // Fontsize and configurations
-$fontsize: 16px;
-$ratio: 1.25; // ratio
-$fontsizeNormal: $fontsize; // normal size, 16px
-$fontsizeHeadingThree: $fontsizeNormal * $ratio; // heading 3, 20px
-$fontsizeHeadingTwo: $fontsizeHeadingThree * $ratio; // heading 2, 25px
-$fontsizeHeadingOne: $fontsizeHeadingTwo * $ratio; // heading 1, 31.25px
-$fontsizeSmallOne: math.div($fontsizeNormal, $ratio); // small 1, 12.8px
-$fontsizeSmallTwo: math.div($fontsizeSmallOne, $ratio); // small 2, 8.192px
 $fontsizes: (
 	normal: 16px,
 	headingThree: 20px,

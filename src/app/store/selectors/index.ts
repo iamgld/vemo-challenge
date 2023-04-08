@@ -1,4 +1,2 @@
-// ----------Global----------
+export * from './countries/countries.selector'
 export * from './global.selector'
-// ----------Auth----------
-export * from './auth/auth.selector'

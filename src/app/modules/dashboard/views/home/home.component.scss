@@ -1,0 +1,6 @@
+@use 'styles' as styles;
+
+.home {
+	max-width: styles.$maxWidth;
+	margin: 0 auto;
+}

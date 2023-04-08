@@ -1,0 +1,116 @@
+<!-- equalColumnsWidth -->
+<table
+	nbSort
+	class="table"
+	nbSpinnerStatus="primary"
+	nbSpinnerSize="giant"
+	[nbSpinner]="isLoading"
+	[nbTreeGrid]="dataSource"
+	(sort)="changeSort($event)"
+>
+	<tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+	<tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+	<!-- Name Columns -->
+	<ng-container nbTreeGridColumnDef="name">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('name')">
+			Name
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.name }}
+		</td>
+	</ng-container>
+	<!-- Capitals Columns -->
+	<ng-container nbTreeGridColumnDef="capitals">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('capitals')">
+			Capitals
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.capitals[0] }}
+		</td>
+	</ng-container>
+	<!-- Currencies Columns -->
+	<ng-container nbTreeGridColumnDef="currencies">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('currencies')">
+			Currencies
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.currencies[0] }}
+		</td>
+	</ng-container>
+	<!-- Continents Columns -->
+	<ng-container nbTreeGridColumnDef="continents">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('continents')">
+			Continents
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.continents[0] }}
+		</td>
+	</ng-container>
+	<!-- Languages Columns -->
+	<ng-container nbTreeGridColumnDef="languages">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('languages')">
+			Languages
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.languages[0] }}
+		</td>
+	</ng-container>
+	<!-- Population Columns -->
+	<ng-container nbTreeGridColumnDef="population">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef [nbSortHeader]="getDirection('population')">
+			Population
+		</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			{{ row.data.population | number }}
+		</td>
+	</ng-container>
+	<!-- Flag Columns -->
+	<ng-container nbTreeGridColumnDef="flag">
+		<th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>Flag</th>
+		<td
+			nbTreeGridCell
+			class="td--center"
+			*nbTreeGridCellDef="let row"
+			(click)="openDialog(row.data)"
+		>
+			<img
+				class="flag__image"
+				nbTooltipStatus="primary"
+				[nbTooltip]="row.data.flag.imageAlt"
+				[src]="row.data.flag.imageUrl"
+				[alt]="row.data.flag.imageAlt"
+			/>
+		</td>
+	</ng-container>
+</table>

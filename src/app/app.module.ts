@@ -10,10 +10,10 @@ import { AppComponent } from './app.component'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { reducers, metaReducers } from '@store/reducers'
+import { reducers } from '@store/reducers'
 import { effects } from '@store/effects'
 // Nebular Imports
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme'
+import { NbThemeModule, NbDialogModule, NbToastrModule } from '@nebular/theme'
 import { NbEvaIconsModule } from '@nebular/eva-icons'
 
 @NgModule({
@@ -24,10 +24,10 @@ import { NbEvaIconsModule } from '@nebular/eva-icons'
 		BrowserAnimationsModule,
 		// Nebular Theme
 		NbThemeModule.forRoot({ name: 'cosmic' }),
-		NbLayoutModule,
-		NbEvaIconsModule,
+		NbDialogModule.forRoot({}),
+		NbToastrModule.forRoot({}),
 		// Store (NGRX)
-		StoreModule.forRoot(reducers, { metaReducers }),
+		StoreModule.forRoot(reducers),
 		EffectsModule.forRoot(effects),
 		StoreDevtoolsModule.instrument({
 			name: 'Angular Template Store',

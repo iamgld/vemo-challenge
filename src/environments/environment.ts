@@ -4,6 +4,9 @@
 
 export const environment = {
 	production: false,
+	countries: {
+		apiUrl: 'https://restcountries.com/v3.1',
+	},
 }
 
 /*
