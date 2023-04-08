@@ -1,0 +1,8 @@
+@use 'styles' as styles;
+
+.charts {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: styles.spacing(s);
+	margin-bottom: styles.spacing(s);
+}

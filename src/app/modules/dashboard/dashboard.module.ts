@@ -10,14 +10,28 @@ import {
 	DatatableComponent,
 	DialogCountryComponent,
 	AutocompleteComponent,
+	ChartsComponent,
+	ChartMostPopulatedCountriesComponent,
+	ChartCountriesPerContinentComponent,
+	ChartCountriesPerLanguageComponent,
 } from '@dashboard/components'
 import { CountriesService } from '@dashboard/services'
 // Shared Imports
 import { NebularModule } from '@shared/modules'
+// Thirdparty Imports
+import { NgChartsModule } from 'ng2-charts'
 
 const views = [HomeComponent]
 
-const components = [DatatableComponent, DialogCountryComponent, AutocompleteComponent]
+const components = [
+	DatatableComponent,
+	DialogCountryComponent,
+	AutocompleteComponent,
+	ChartsComponent,
+	ChartMostPopulatedCountriesComponent,
+	ChartCountriesPerContinentComponent,
+	ChartCountriesPerLanguageComponent,
+]
 
 const services = [CountriesService]
 
@@ -29,6 +43,8 @@ const services = [CountriesService]
 		HttpClientModule,
 		ReactiveFormsModule,
 		NebularModule,
+		// Ng2 Charts
+		NgChartsModule,
 	],
 	providers: [...services],
 })

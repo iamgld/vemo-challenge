@@ -1,0 +1,28 @@
+@use 'styles' as styles;
+
+$chartSize: 300px;
+
+.chart {
+	height: 100%;
+
+	&__body {
+		overflow: hidden;
+	}
+
+	&__label {
+		margin: 0 0 styles.spacing(s);
+		text-transform: capitalize;
+	}
+
+	&__canvas {
+		height: 100%;
+		display: flex;
+		height: $chartSize;
+
+		canvas {
+			width: 100% !important;
+			height: $chartSize !important;
+			margin: auto;
+		}
+	}
+}

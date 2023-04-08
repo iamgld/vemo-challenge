@@ -1,6 +1,18 @@
 @use 'styles' as styles;
 
 .home {
-	max-width: styles.$maxWidth;
-	margin: 0 auto;
+	height: 100vh;
+
+	&__column {
+		max-width: styles.$maxWidth;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 400px 1fr;
+		gap: styles.spacing(s);
+	}
+
+	&__scroll {
+		height: calc(130vh - 76px);
+		overflow-y: scroll;
+	}
 }

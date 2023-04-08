@@ -1,0 +1,16 @@
+<nb-card class="chart">
+	<nb-card-body class="chart__body">
+		<p class="chart__label">most populated countries</p>
+		<section class="chart__canvas">
+			<canvas
+				baseChart
+				[data]="barChartData"
+				[options]="barChartOptions"
+				[type]="barChartType"
+				(chartHover)="chartHovered($event)"
+				(chartClick)="chartClicked($event)"
+			>
+			</canvas>
+		</section>
+	</nb-card-body>
+</nb-card>

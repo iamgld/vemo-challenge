@@ -1,0 +1,15 @@
+<nb-card class="chart">
+	<nb-card-body class="chart__body">
+		<p class="chart__label">countries per continent</p>
+		<section class="chart__canvas">
+			<canvas
+				baseChart
+				[data]="pieChartData"
+				[type]="pieChartType"
+				[options]="pieChartOptions"
+				[plugins]="pieChartPlugins"
+			>
+			</canvas>
+		</section>
+	</nb-card-body>
+</nb-card>

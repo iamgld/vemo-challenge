@@ -1,13 +1,14 @@
-<nb-layout>
+<nb-layout class="home">
 	<nb-layout-header fixed>
 		<app-autocomplete></app-autocomplete>
 	</nb-layout-header>
 
-	<nb-layout-column>
-		<article class="home">
-			<app-datatable></app-datatable>
+	<nb-layout-column class="home__column">
+		<app-charts class="home__charts"></app-charts>
+		<article class="home__scroll">
+			<app-datatable class="home__datatable"></app-datatable>
 		</article>
 	</nb-layout-column>
 
-	<nb-layout-footer fixed> Insert footer here </nb-layout-footer>
+	<!-- <nb-layout-footer fixed> Insert footer here </nb-layout-footer> -->
 </nb-layout>

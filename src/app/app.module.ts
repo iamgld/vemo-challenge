@@ -14,7 +14,6 @@ import { reducers } from '@store/reducers'
 import { effects } from '@store/effects'
 // Nebular Imports
 import { NbThemeModule, NbDialogModule, NbToastrModule } from '@nebular/theme'
-import { NbEvaIconsModule } from '@nebular/eva-icons'
 
 @NgModule({
 	declarations: [AppComponent],
