@@ -7,10 +7,10 @@ const countriesFeature = createFeatureSelector<CountriesState>('countries')
 
 export const getOriginalCountries = createSelector(
 	countriesFeature,
-	(countries: CountriesState) => countries.original
+	(countries: CountriesState) => [...countries.original]
 )
 
 export const getFilteredCountries = createSelector(
 	countriesFeature,
-	(countries: CountriesState) => countries.filtered
+	(countries: CountriesState) => [...countries.filtered]
 )

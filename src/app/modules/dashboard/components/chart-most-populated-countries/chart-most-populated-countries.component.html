@@ -1,15 +1,10 @@
-<nb-card class="chart">
+<nb-card class="chart" nbSpinnerStatus="primary" nbSpinnerSize="giant" [nbSpinner]="isLoading">
 	<nb-card-body class="chart__body">
-		<p class="chart__label">most populated countries</p>
+		<!-- Label -->
+		<p class="chart__label">5 most populated countries</p>
+		<!-- Chart -->
 		<section class="chart__canvas">
-			<canvas
-				baseChart
-				[data]="barChartData"
-				[options]="barChartOptions"
-				[type]="barChartType"
-				(chartHover)="chartHovered($event)"
-				(chartClick)="chartClicked($event)"
-			>
+			<canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
 			</canvas>
 		</section>
 	</nb-card-body>

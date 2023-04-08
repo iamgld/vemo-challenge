@@ -15,6 +15,7 @@ import { Subject, takeUntil } from 'rxjs'
 })
 export class ChartsComponent implements OnInit, OnDestroy {
 	countries: Country[] = []
+	fiveMostPopulatedCountries: Country[] = []
 
 	private _destroy$ = new Subject()
 	constructor(private _store: Store) {}
@@ -25,12 +26,24 @@ export class ChartsComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this._destroy$))
 			.subscribe({
 				next: (countriesFiltered: Country[]) => {
-					this.countries = countriesFiltered
+					if (countriesFiltered.length) {
+						this.countries = countriesFiltered
+						this.fiveMostPopulatedCountries = this._findFiveMostPopulateCountries(countriesFiltered)
+					}
 				},
 			})
 	}
 
 	ngOnDestroy(): void {
 		this._destroy$.complete()
+	}
+
+	private _findFiveMostPopulateCountries(countries: Country[]): Country[] {
+		const sortedByMosPopulatedCountries = countries.sort(
+			(a: Country, b: Country) => b.population - a.population
+		)
+		const fiveMostPopulatedCountries = sortedByMosPopulatedCountries.slice(0, 5)
+
+		return fiveMostPopulatedCountries
 	}
 }

@@ -1,57 +1,66 @@
-import { Component, ViewChild } from '@angular/core'
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js'
+// Angular Imports
+import { Component, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core'
+// Shared Imports
+import { Country } from '@shared/models'
+// Thirdparty Imports
 import { BaseChartDirective } from 'ng2-charts'
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js'
+import { timer } from 'rxjs'
 
 @Component({
 	selector: 'app-chart-most-populated-countries',
 	templateUrl: './chart-most-populated-countries.component.html',
 	styleUrls: ['./chart-most-populated-countries.component.scss'],
 })
-export class ChartMostPopulatedCountriesComponent {
+export class ChartMostPopulatedCountriesComponent implements OnChanges {
+	@Input() countries: Country[] = []
 	@ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined
+	isLoading = true
 
-	public barChartOptions: ChartConfiguration['options'] = {
+	barChartOptions: ChartConfiguration['options'] = {
 		responsive: true,
-		// We use these empty structures as placeholders for dynamic theming.
+		indexAxis: 'y',
 		scales: {
 			x: {},
-			y: {
-				min: 10,
+			y: {},
+		},
+		plugins: {
+			legend: {
+				position: 'top',
 			},
 		},
 	}
-	public barChartType: ChartType = 'bar'
-	public barChartPlugins = []
+	barChartType: ChartType = 'bar'
+	barChartPlugins = []
 
-	public barChartData: ChartData<'bar'> = {
-		labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-		datasets: [
-			{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-			{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-		],
+	barChartData: ChartData<'bar'> = {
+		labels: [],
+		datasets: [],
 	}
 
-	// events
-	public chartClicked({ event, active }: { event?: ChartEvent; active?: {}[] }): void {
-		console.log(event, active)
+	private _countdown$ = timer(2000)
+
+	constructor() {}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['countries'] && changes['countries'].currentValue.length) {
+			this._buildChartData(changes['countries'].currentValue)
+		}
 	}
 
-	public chartHovered({ event, active }: { event?: ChartEvent; active?: {}[] }): void {
-		console.log(event, active)
-	}
-
-	public randomize(): void {
-		// Only Change 3 values
-		this.barChartData.datasets[0].data = [
-			Math.round(Math.random() * 100),
-			59,
-			80,
-			Math.round(Math.random() * 100),
-			56,
-			Math.round(Math.random() * 100),
-			40,
-		]
-
-		this.chart?.update()
+	private _buildChartData(countries: Country[]) {
+		// Update chart data
+		this.barChartData = {
+			labels: [...countries.map((country: Country) => country.name)],
+			datasets: [
+				{
+					data: [...countries.map((country: Country, index: number) => country.population)],
+					label: 'Population',
+					borderRadius: 8,
+				},
+			],
+		}
+		// Automatically disbale loader
+		this._countdown$.subscribe({ next: () => (this.isLoading = false) })
 	}
 }
