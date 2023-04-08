@@ -13,11 +13,13 @@ import { timer } from 'rxjs'
 	styleUrls: ['./dialog-country.component.scss'],
 })
 export class DialogCountryComponent {
-	isLoading = true
+	isLoading = false
+	country: Country | null = null
 
-	private _countdown$ = timer(1500)
+	private _countdown$ = timer(1000)
 
-	constructor(protected dialogRef: NbDialogRef<Country>) {
+	constructor(private dialogRef: NbDialogRef<Country>) {
+		this.isLoading = true
 		// Automatically disbale loader
 		this._countdown$.subscribe({ next: () => (this.isLoading = false) })
 	}

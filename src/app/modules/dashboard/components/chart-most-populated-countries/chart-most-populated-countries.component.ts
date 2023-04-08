@@ -44,7 +44,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	}
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(1500)
+	private _countdown$ = timer(1000)
 
 	constructor(private _dialog: NbDialogService) {}
 

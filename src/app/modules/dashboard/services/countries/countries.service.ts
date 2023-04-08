@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from '@environment'
 // Shared Imports
-import { Country, CountryLanguage } from '@shared/models'
+import { Country, CountryLanguage, CountryCurrency } from '@shared/models'
 // Store Imports
 import { Store } from '@ngrx/store'
 import { INITIALIZE_COUNTRIES } from '@store/actions'
@@ -27,18 +27,24 @@ export class CountriesService {
 				// Type each country data
 				if (response && response.length) {
 					response.map((item: any) => {
-						const formatCurrencies = () => {
-							if (item.currencies) {
-								return Object.entries(item.currencies).map(
-									([key, value]: [string, any]) => `${key.toUpperCase()} - ${value.name} `
-								)
-							} else {
-								return false
+						const countryCurrencies: CountryCurrency[] = []
+						const buildCurrencyPerCountry = (): void => {
+							let countryCurrency: CountryCurrency = {
+								code: '-',
+								name: 'unknown language',
 							}
+							if (item.currencies) {
+								Object.entries(item.currencies).map(([key, value]: [string, any]) => {
+									countryCurrency.code = key.toUpperCase()
+									countryCurrency.name = value.name
+								})
+							}
+							countryCurrencies.push(countryCurrency)
 						}
+						buildCurrencyPerCountry()
 
 						const countryLanguages: CountryLanguage[] = []
-						const buildCountryLanguages = (): void => {
+						const buildLanguagesPerCountry = (): void => {
 							let countryLanguage: CountryLanguage = {
 								code: '-',
 								name: 'unknown language',
@@ -51,12 +57,12 @@ export class CountriesService {
 							}
 							countryLanguages.push(countryLanguage)
 						}
-						buildCountryLanguages()
+						buildLanguagesPerCountry()
 
 						const country: Country = {
 							name: item.name.common || '-',
 							capitals: item.capital || ['-'],
-							currencies: formatCurrencies() || ['-'],
+							currencies: countryCurrencies,
 							continents: item.continents || ['-'],
 							languages: countryLanguages,
 							population: item.population || 0,

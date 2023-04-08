@@ -8,17 +8,19 @@
 	display: flex;
 	align-items: center;
 
+	&__actions {
+		display: flex;
+		gap: styles.spacing(s);
+	}
+
 	&__search {
 		margin-left: auto;
 		display: flex;
-		// justify-content: center;
 		gap: styles.spacing(s);
-		// width: 100%;
 
 		&__actions {
 			display: flex;
 			gap: styles.spacing(s);
-			// margin-left: auto;
 		}
 
 		[nbInput] {

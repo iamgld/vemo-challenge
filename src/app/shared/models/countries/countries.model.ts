@@ -1,7 +1,7 @@
 export interface Country {
 	name: string
 	capitals: string[]
-	currencies: string[]
+	currencies: CountryCurrency[]
 	continents: string[]
 	languages: CountryLanguage[]
 	population: number
@@ -12,6 +12,11 @@ export interface Country {
 }
 
 export interface CountryLanguage {
+	code: string
+	name: string
+}
+
+export interface CountryCurrency {
 	code: string
 	name: string
 }

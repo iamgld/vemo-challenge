@@ -98,7 +98,11 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	}
 
 	openDialog(country: Country) {
-		this._dialog.open(DialogCountryComponent, {})
+		this._dialog.open(DialogCountryComponent, {
+			context: {
+				country,
+			},
+		})
 	}
 
 	private _updateDataSource(countries: Country[]) {

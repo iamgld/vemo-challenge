@@ -1,3 +1,46 @@
-<nb-card accent="success" nbSpinnerStatus="success" nbSpinnerSize="giant" [nbSpinner]="isLoading">
-	<nb-card-body> </nb-card-body>
+<nb-card
+	class="card"
+	accent="success"
+	nbSpinnerStatus="success"
+	nbSpinnerSize="giant"
+	[nbSpinner]="isLoading"
+>
+	<nb-card-body *ngIf="country">
+		<p class="card__title">Name</p>
+		<p class="card__paragraph">{{ country.name }}</p>
+		<p class="card__title">Capitals</p>
+		<p class="card__paragraph">
+			<ng-container *ngFor="let capital of country.capitals">
+				{{ capital }}
+			</ng-container>
+		</p>
+		<p class="card__title">Currencies</p>
+		<p class="card__paragraph">
+			<ng-container *ngFor="let currency of country.currencies">
+				{{ currency.code }} - {{ currency.name }}
+			</ng-container>
+		</p>
+		<p class="card__title">Continents</p>
+		<p class="card__paragraph">
+			<ng-container *ngFor="let continent of country.continents">
+				{{ continent }}
+			</ng-container>
+		</p>
+		<p class="card__title">Languages</p>
+		<p class="card__paragraph">
+			<ng-container *ngFor="let language of country.languages">
+				{{ language.code }} - {{ language.name }}
+			</ng-container>
+		</p>
+		<p class="card__title">Population</p>
+		<p class="card__paragraph">{{ country.population | number }}</p>
+		<p class="card__title">Flag</p>
+		<img
+			class="card__image"
+			nbTooltipStatus="primary"
+			[nbTooltip]="country.flag.imageAlt"
+			[src]="country.flag.imageUrl"
+			[alt]="country.flag.imageAlt"
+		/>
+	</nb-card-body>
 </nb-card>
