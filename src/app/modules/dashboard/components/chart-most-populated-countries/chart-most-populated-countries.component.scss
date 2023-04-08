@@ -12,6 +12,8 @@ $chartSize: 250px;
 	&__label {
 		margin: 0 0 styles.spacing(s);
 		text-transform: capitalize;
+		@include styles.fontsizeHeadingThree();
+		font-family: styles.$quicksand ;
 	}
 
 	&__canvas {

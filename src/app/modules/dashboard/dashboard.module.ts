@@ -19,7 +19,7 @@ import { CountriesService } from '@dashboard/services'
 // Shared Imports
 import { NebularModule } from '@shared/modules'
 // Thirdparty Imports
-import { NgChartsModule } from 'ng2-charts'
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts'
 
 const views = [HomeComponent]
 
@@ -44,7 +44,14 @@ const services = [CountriesService]
 		ReactiveFormsModule,
 		NebularModule,
 		// Ng2 Charts
-		NgChartsModule,
+		NgChartsModule.forRoot({
+			generateColors: true,
+			defaults: {
+				font: { size: 11, family: "'Roboto', sans-serif" },
+				color: 'white',
+				responsive: true,
+			},
+		}),
 	],
 	providers: [...services],
 })

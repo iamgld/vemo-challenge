@@ -219,46 +219,46 @@
 // Define a source size that was used in each breakpoint
 @mixin fontsizeHeadingOne() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeHeadingThree);
+	font-size: fontsizes(headingThree);
 	@include from(tb) {
-		font-size: fontsizes(fontsizeHeadingTwo);
+		font-size: fontsizes(headingTwo);
 	}
 	@include from(dt) {
-		font-size: fontsizes(fontsizeHeadingOne);
+		font-size: fontsizes(headingOne);
 	}
 }
 @mixin fontsizeHeadingTwo() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeNormal);
+	font-size: fontsizes(normal);
 	@include from(tb) {
-		font-size: fontsizes(fontsizeHeadingThree);
+		font-size: fontsizes(headingThree);
 	}
 	@include from(dt) {
-		font-size: fontsizes(fontsizeHeadingTwo);
+		font-size: fontsizes(headingTwo);
 	}
 }
 @mixin fontsizeHeadingThree() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeNormal);
+	font-size: fontsizes(normal);
 	@include from(dt) {
-		font-size: fontsizes(fontsizeHeadingThree);
+		font-size: fontsizes(headingThree);
 	}
 }
 @mixin fontsizeNormal() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeSmallOne);
+	font-size: fontsizes(smallOne);
 	@include from(dt) {
-		font-size: fontsizes(fontsizeNormal);
+		font-size: fontsizes(normal);
 	}
 }
 @mixin fontsizeSmallOne() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeSmallTwo);
+	font-size: fontsizes(smallTwo);
 	@include from(dt) {
-		font-size: fontsizes(fontsizeSmallOne);
+		font-size: fontsizes(smallOne);
 	}
 }
 @mixin fontsizeSmallTwo() {
 	font-family: setting.$roboto;
-	font-size: fontsizes(fontsizeSmallTwo);
+	font-size: fontsizes(smallTwo);
 }

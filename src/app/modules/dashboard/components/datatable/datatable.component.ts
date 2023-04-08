@@ -68,7 +68,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
 
 		this._countries.getAllCountries().subscribe({
 			next: (countries: Country[]) => {
-				console.log('countries', countries)
+				// console.log('countries', countries)
 			},
 			error: (error) => {
 				this.isLoading = false

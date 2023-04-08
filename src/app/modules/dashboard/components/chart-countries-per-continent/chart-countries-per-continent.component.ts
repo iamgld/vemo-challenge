@@ -1,138 +1,72 @@
-import { Component, ViewChild } from '@angular/core'
+// Angular Imports
+import { Component, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core'
+// Shared Imports
+import { CountriesPerContinent } from '@shared/models'
+// Thirdparty Imports
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js'
 import { BaseChartDirective } from 'ng2-charts'
+import { timer } from 'rxjs'
 
 @Component({
 	selector: 'app-chart-countries-per-continent',
 	templateUrl: './chart-countries-per-continent.component.html',
 	styleUrls: ['./chart-countries-per-continent.component.scss'],
 })
-export class ChartCountriesPerContinentComponent {
-	@ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined
+export class ChartCountriesPerContinentComponent implements OnChanges {
+	@Input() countriesPerContinent: CountriesPerContinent[] = []
+	@ViewChild(BaseChartDirective)
+	chart: BaseChartDirective | undefined
+	isLoading = true
 
-	// Pie
-	public pieChartOptions: ChartConfiguration['options'] = {
-		responsive: true,
+	pieChartOptions: ChartConfiguration['options'] = {
 		plugins: {
 			legend: {
 				display: true,
-				position: 'top',
+				position: 'left',
 			},
 		},
 	}
-	public pieChartData: ChartData<'pie', number[], string | string[]> = {
-		labels: [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'],
-		datasets: [
-			{
-				data: [300, 500, 100],
-			},
-		],
+	pieChartData: ChartData<'pie', number[], string | string[]> = {
+		labels: [],
+		datasets: [],
 	}
-	public pieChartType: ChartType = 'pie'
-	public pieChartPlugins = []
+	pieChartType: ChartType = 'pie'
+	pieChartPlugins = []
 
-	// events
-	public chartClicked({ event, active }: { event: ChartEvent; active: {}[] }): void {
-		console.log(event, active)
-	}
+	private _countdown$ = timer(2000)
 
-	public chartHovered({ event, active }: { event: ChartEvent; active: {}[] }): void {
-		console.log(event, active)
-	}
+	constructor() {}
 
-	changeLabels(): void {
-		const words = [
-			'hen',
-			'variable',
-			'embryo',
-			'instal',
-			'pleasant',
-			'physical',
-			'bomber',
-			'army',
-			'add',
-			'film',
-			'conductor',
-			'comfortable',
-			'flourish',
-			'establish',
-			'circumstance',
-			'chimney',
-			'crack',
-			'hall',
-			'energy',
-			'treat',
-			'window',
-			'shareholder',
-			'division',
-			'disk',
-			'temptation',
-			'chord',
-			'left',
-			'hospital',
-			'beef',
-			'patrol',
-			'satisfied',
-			'academy',
-			'acceptance',
-			'ivory',
-			'aquarium',
-			'building',
-			'store',
-			'replace',
-			'language',
-			'redeem',
-			'honest',
-			'intention',
-			'silk',
-			'opera',
-			'sleep',
-			'innocent',
-			'ignore',
-			'suite',
-			'applaud',
-			'funny',
-		]
-		const randomWord = () => words[Math.trunc(Math.random() * words.length)]
-		this.pieChartData.labels = new Array(3).map((_) => randomWord())
-
-		this.chart?.update()
-	}
-
-	addSlice(): void {
-		if (this.pieChartData.labels) {
-			this.pieChartData.labels.push(['Line 1', 'Line 2', 'Line 3'])
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['countriesPerContinent'] && changes['countriesPerContinent'].currentValue.length) {
+			this._buildChartData(changes['countriesPerContinent'].currentValue)
 		}
-
-		this.pieChartData.datasets[0].data.push(400)
-
-		this.chart?.update()
 	}
 
-	removeSlice(): void {
-		if (this.pieChartData.labels) {
-			this.pieChartData.labels.pop()
+	private _buildChartData(countriesPerContinent: CountriesPerContinent[]) {
+		// Update chart data
+		this.pieChartData = {
+			labels: [
+				...countriesPerContinent.map(
+					(countriesPerContinent: CountriesPerContinent) => countriesPerContinent.continent
+				),
+			],
+			datasets: [
+				{
+					data: [
+						...countriesPerContinent.map(
+							(countriesPerContinent: CountriesPerContinent) =>
+								countriesPerContinent.countries.length
+						),
+					],
+					label: 'Countries',
+					// borderRadius: 8,
+				},
+			],
 		}
+		console.log(countriesPerContinent)
 
-		this.pieChartData.datasets[0].data.pop()
-
-		this.chart?.update()
-	}
-
-	changeLegendPosition(): void {
-		if (this.pieChartOptions?.plugins?.legend) {
-			this.pieChartOptions.plugins.legend.position =
-				this.pieChartOptions.plugins.legend.position === 'left' ? 'top' : 'left'
-		}
-
-		this.chart?.render()
-	}
-
-	toggleLegend(): void {
-		if (this.pieChartOptions?.plugins?.legend) {
-			this.pieChartOptions.plugins.legend.display = !this.pieChartOptions.plugins.legend.display
-		}
-
-		this.chart?.render()
+		// Automatically disbale loader
+		this._countdown$.subscribe({ next: () => (this.isLoading = false) })
 	}
 }

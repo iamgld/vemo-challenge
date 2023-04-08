@@ -18,7 +18,6 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	isLoading = true
 
 	barChartOptions: ChartConfiguration['options'] = {
-		responsive: true,
 		indexAxis: 'y',
 		scales: {
 			x: {},
@@ -54,7 +53,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 			labels: [...countries.map((country: Country) => country.name)],
 			datasets: [
 				{
-					data: [...countries.map((country: Country, index: number) => country.population)],
+					data: [...countries.map((country: Country) => country.population)],
 					label: 'Population',
 					borderRadius: 8,
 				},

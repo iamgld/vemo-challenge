@@ -4,15 +4,15 @@
 	height: 100vh;
 
 	&__column {
-		max-width: styles.$maxWidth;
-		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 420px 1fr;
+		grid-template-columns: 400px 1fr;
 		gap: styles.spacing(s);
+		// height: calc(100vh - 76px);
+		padding: styles.spacing(xxs) !important;
 	}
 
 	&__scroll {
-		height: calc(130vh - 76px);
+		height: calc(125vh);
 		overflow-y: scroll;
 	}
 }

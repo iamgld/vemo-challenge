@@ -1,6 +1,8 @@
-<nb-card class="chart">
+<nb-card class="chart" nbSpinnerStatus="primary" nbSpinnerSize="giant" [nbSpinner]="isLoading">
 	<nb-card-body class="chart__body">
+		<!-- Label -->
 		<p class="chart__label">countries per continent</p>
+		<!-- Chart -->
 		<section class="chart__canvas">
 			<canvas
 				baseChart

@@ -10,3 +10,12 @@ export interface Country {
 		imageAlt: string
 	}
 }
+
+export interface CountriesPerContinent {
+	continent: string
+	countries: Country[]
+}
+export interface CountriesPerLanguage {
+	language: string
+	countries: Country[]
+}

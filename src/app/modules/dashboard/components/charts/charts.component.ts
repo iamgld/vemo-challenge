@@ -1,7 +1,7 @@
 // Angular Imports
 import { Component, OnInit, OnDestroy } from '@angular/core'
 // Shared Imports
-import { Country } from '@shared/models'
+import { CountriesPerContinent, Country } from '@shared/models'
 // Store Imports
 import { Store } from '@ngrx/store'
 import { getFilteredCountries } from '@store/selectors'
@@ -16,8 +16,10 @@ import { Subject, takeUntil } from 'rxjs'
 export class ChartsComponent implements OnInit, OnDestroy {
 	countries: Country[] = []
 	fiveMostPopulatedCountries: Country[] = []
+	countriesPerContinent: CountriesPerContinent[] = []
 
 	private _destroy$ = new Subject()
+
 	constructor(private _store: Store) {}
 
 	ngOnInit(): void {
@@ -29,6 +31,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
 					if (countriesFiltered.length) {
 						this.countries = countriesFiltered
 						this.fiveMostPopulatedCountries = this._findFiveMostPopulateCountries(countriesFiltered)
+						this.countriesPerContinent = this._buildCountriesPerContinent(countriesFiltered)
 					}
 				},
 			})
@@ -45,5 +48,44 @@ export class ChartsComponent implements OnInit, OnDestroy {
 		const fiveMostPopulatedCountries = sortedByMosPopulatedCountries.slice(0, 5)
 
 		return fiveMostPopulatedCountries
+	}
+
+	private _buildCountriesPerContinent(countries: Country[]): CountriesPerContinent[] {
+		const countriesPerContinent: CountriesPerContinent[] = []
+
+		countries.map((country: Country) => {
+			country.continents.map((continent: string) => {
+				const thisContinentExist = countriesPerContinent.find(
+					(countriesPerContinent: CountriesPerContinent) =>
+						countriesPerContinent.continent === continent
+				)
+
+				if (thisContinentExist) {
+					const findCurrentContinent = countriesPerContinent.find(
+						(countriesPerContinent: CountriesPerContinent) =>
+							countriesPerContinent.continent === continent
+					)
+
+					if (findCurrentContinent) {
+						const countryPerContinent: CountriesPerContinent = {
+							continent,
+							countries: [...findCurrentContinent.countries, country],
+						}
+						const index: number = countriesPerContinent.indexOf(findCurrentContinent)
+						countriesPerContinent[index] = countryPerContinent
+					} else {
+						console.error(`Something went wrong, this continent doesn't exists`)
+					}
+				} else {
+					const countryPerContinent: CountriesPerContinent = {
+						continent,
+						countries: [country],
+					}
+					countriesPerContinent.push(countryPerContinent)
+				}
+			})
+		})
+
+		return countriesPerContinent
 	}
 }
