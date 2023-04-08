@@ -3,7 +3,7 @@ export interface Country {
 	capitals: string[]
 	currencies: string[]
 	continents: string[]
-	languages: string[]
+	languages: CountryLanguage[]
 	population: number
 	flag: {
 		imageUrl: string
@@ -11,11 +11,16 @@ export interface Country {
 	}
 }
 
+export interface CountryLanguage {
+	code: string
+	name: string
+}
+
 export interface CountriesPerContinent {
 	continent: string
 	countries: Country[]
 }
 export interface CountriesPerLanguage {
-	language: string
+	language: CountryLanguage
 	countries: Country[]
 }

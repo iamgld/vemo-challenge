@@ -1,8 +1,7 @@
-<!-- equalColumnsWidth -->
 <table
 	nbSort
 	class="table"
-	nbSpinnerStatus="primary"
+	nbSpinnerStatus="success"
 	nbSpinnerSize="giant"
 	[nbSpinner]="isLoading"
 	[nbTreeGrid]="dataSource"
@@ -78,7 +77,7 @@
 			*nbTreeGridCellDef="let row"
 			(click)="openDialog(row.data)"
 		>
-			{{ row.data.languages[0] }}
+			{{ row.data.languages[0].code }} - {{ row.data.languages[0].name }}
 		</td>
 	</ng-container>
 	<!-- Population Columns -->

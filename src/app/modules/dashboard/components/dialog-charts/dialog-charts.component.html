@@ -1,17 +1,20 @@
 <article class="charts">
-	<section class="charts__chart">
+	<section class="charts__chart" *ngIf="DialogChartsName.mostPopulated === currentChartName">
 		<app-chart-most-populated-countries
 			[countries]="fiveMostPopulatedCountries"
+			[chartExpands]="chartExpands"
 		></app-chart-most-populated-countries>
 	</section>
-	<section class="charts__chart">
+	<section class="charts__chart" *ngIf="DialogChartsName.continents === currentChartName">
 		<app-chart-countries-per-continent
 			[countriesPerContinent]="countriesPerContinent"
+			[chartExpands]="chartExpands"
 		></app-chart-countries-per-continent>
 	</section>
-	<section class="charts__chart">
+	<section class="charts__chart" *ngIf="DialogChartsName.languages === currentChartName">
 		<app-chart-countries-per-language
 			[countriesPerLanguage]="countriesPerLanguage"
+			[chartExpands]="chartExpands"
 		></app-chart-countries-per-language>
 	</section>
 </article>

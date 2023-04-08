@@ -4,4 +4,5 @@ export * from './chart-countries-per-language/chart-countries-per-language.compo
 export * from './chart-most-populated-countries/chart-most-populated-countries.component'
 export * from './charts/charts.component'
 export * from './datatable/datatable.component'
+export * from './dialog-charts/dialog-charts.component'
 export * from './dialog-country/dialog-country.component'

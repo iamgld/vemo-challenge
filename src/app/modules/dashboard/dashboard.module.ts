@@ -9,6 +9,7 @@ import { HomeComponent } from '@dashboard/views'
 import {
 	DatatableComponent,
 	DialogCountryComponent,
+	DialogChartsComponent,
 	AutocompleteComponent,
 	ChartsComponent,
 	ChartMostPopulatedCountriesComponent,
@@ -26,6 +27,7 @@ const views = [HomeComponent]
 const components = [
 	DatatableComponent,
 	DialogCountryComponent,
+	DialogChartsComponent,
 	AutocompleteComponent,
 	ChartsComponent,
 	ChartMostPopulatedCountriesComponent,
@@ -34,6 +36,16 @@ const components = [
 ]
 
 const services = [CountriesService]
+
+const chartsConfig: NgChartsConfiguration = {
+	generateColors: true,
+	defaults: {
+		font: { size: 11, family: "'Roboto', sans-serif" },
+		color: '#fafafa',
+		borderColor: '#1B1B39',
+		responsive: true,
+	},
+}
 
 @NgModule({
 	declarations: [...views, ...components],
@@ -44,14 +56,7 @@ const services = [CountriesService]
 		ReactiveFormsModule,
 		NebularModule,
 		// Ng2 Charts
-		NgChartsModule.forRoot({
-			generateColors: true,
-			defaults: {
-				font: { size: 11, family: "'Roboto', sans-serif" },
-				color: 'white',
-				responsive: true,
-			},
-		}),
+		NgChartsModule.forRoot(chartsConfig),
 	],
 	providers: [...services],
 })

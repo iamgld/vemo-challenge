@@ -1,7 +1,27 @@
-<nb-card class="chart" nbSpinnerStatus="primary" nbSpinnerSize="giant" [nbSpinner]="isLoading">
+<nb-card
+	class="chart"
+	nbSpinnerStatus="success"
+	nbSpinnerSize="giant"
+	[nbSpinner]="isLoading"
+	[class.chart--expands]="chartExpands"
+>
 	<nb-card-body class="chart__body">
-		<!-- Label -->
-		<p class="chart__label">5 most populated countries</p>
+		<!-- Label & Actions -->
+		<section class="chart__actions">
+			<p class="chart__label" [class.chart__label--expands]="chartExpands">
+				5 most populated countries
+			</p>
+			<button
+				nbButton
+				outline
+				status="primary"
+				*ngIf="!chartExpands"
+				(click)="openDialog(DialogChartsName.mostPopulated)"
+			>
+				<nb-icon icon="expand-outline"></nb-icon>expand
+			</button>
+		</section>
+
 		<!-- Chart -->
 		<section class="chart__canvas">
 			<canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">

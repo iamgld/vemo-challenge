@@ -95,7 +95,6 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	}
 
 	openDialog(country: Country) {
-		console.log('click', country)
 		const dialogRef = this._dialog.open(DialogCountryComponent, {})
 		dialogRef.onClose.subscribe({
 			next: () => {

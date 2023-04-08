@@ -1,7 +1,12 @@
 // Angular Imports
 import { Component, OnInit, OnDestroy } from '@angular/core'
 // Shared Imports
-import { CountriesPerContinent, Country } from '@shared/models'
+import {
+	CountriesPerContinent,
+	Country,
+	CountriesPerLanguage,
+	CountryLanguage,
+} from '@shared/models'
 // Store Imports
 import { Store } from '@ngrx/store'
 import { getFilteredCountries } from '@store/selectors'
@@ -17,6 +22,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
 	countries: Country[] = []
 	fiveMostPopulatedCountries: Country[] = []
 	countriesPerContinent: CountriesPerContinent[] = []
+	countriesPerLanguage: CountriesPerLanguage[] = []
 
 	private _destroy$ = new Subject()
 
@@ -32,6 +38,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
 						this.countries = countriesFiltered
 						this.fiveMostPopulatedCountries = this._findFiveMostPopulateCountries(countriesFiltered)
 						this.countriesPerContinent = this._buildCountriesPerContinent(countriesFiltered)
+						this.countriesPerLanguage = this._buildCountriesPerLanguage(countriesFiltered)
 					}
 				},
 			})
@@ -56,8 +63,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
 		countries.map((country: Country) => {
 			country.continents.map((continent: string) => {
 				const thisContinentExist = countriesPerContinent.find(
-					(countriesPerContinent: CountriesPerContinent) =>
-						countriesPerContinent.continent === continent
+					(countryPerContinent: CountriesPerContinent) =>
+						countryPerContinent.continent === continent
 				)
 
 				if (thisContinentExist) {
@@ -87,5 +94,53 @@ export class ChartsComponent implements OnInit, OnDestroy {
 		})
 
 		return countriesPerContinent
+	}
+
+	private _buildCountriesPerLanguage(countries: Country[]): CountriesPerLanguage[] {
+		const countriesPerLanguage: CountriesPerLanguage[] = []
+
+		countries.map((country: Country) => {
+			country.languages.map((language: CountryLanguage) => {
+				const thisLanguageExist = countriesPerLanguage.find(
+					(countryPerLanguage: CountriesPerLanguage) =>
+						countryPerLanguage.language.code === language.code
+				)
+
+				if (thisLanguageExist) {
+					const findCurrentLanguage = countriesPerLanguage.find(
+						(countryPerLanguage: CountriesPerLanguage) =>
+							countryPerLanguage.language.code === language.code
+					)
+					if (findCurrentLanguage) {
+						const countryPerLanguage: CountriesPerLanguage = {
+							language,
+							countries: [...findCurrentLanguage.countries, country],
+						}
+						const index: number = countriesPerLanguage.indexOf(countryPerLanguage)
+						countriesPerLanguage[index] = countryPerLanguage
+					} else {
+						console.error(`Something went wrong, this language doesn't exists`)
+					}
+				} else {
+					const countryPerLanguage: CountriesPerLanguage = {
+						language,
+						countries: [country],
+					}
+					countriesPerLanguage.push(countryPerLanguage)
+				}
+			})
+		})
+
+		// let countCountries = 0
+		// countriesPerLanguage.map((item: any) => {
+		// 	console.log('language', item.language, item.countries.length)
+		// 	item.countries.map((country: any) => {
+		// 		countCountries = countCountries + 1
+		// 	})
+		// })
+
+		// console.log('countCountries', countCountries)
+
+		return countriesPerLanguage
 	}
 }

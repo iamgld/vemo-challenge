@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from '@environment'
 // Shared Imports
-import { Country } from '@shared/models'
+import { Country, CountryLanguage } from '@shared/models'
 // Store Imports
 import { Store } from '@ngrx/store'
 import { INITIALIZE_COUNTRIES } from '@store/actions'
@@ -36,22 +36,28 @@ export class CountriesService {
 							}
 						}
 
-						const formatLanguages = () => {
-							if (item.currencies) {
-								return Object.entries(item.languages).map(
-									([key, value]: [string, any]) => `${key.toUpperCase()} - ${value} `
-								)
-							} else {
-								return false
+						const countryLanguages: CountryLanguage[] = []
+						const buildCountryLanguages = (): void => {
+							let countryLanguage: CountryLanguage = {
+								code: '-',
+								name: 'unknown',
 							}
+							if (item.languages) {
+								Object.entries(item.languages).map(([key, value]: [string, any]) => {
+									countryLanguage.code = key.toUpperCase()
+									countryLanguage.name = value
+								})
+							}
+							countryLanguages.push(countryLanguage)
 						}
+						buildCountryLanguages()
 
 						const country: Country = {
 							name: item.name.common || '-',
 							capitals: item.capital || ['-'],
 							currencies: formatCurrencies() || ['-'],
 							continents: item.continents || ['-'],
-							languages: formatLanguages() || ['-'],
+							languages: countryLanguages,
 							population: item.population || 0,
 							flag: {
 								imageUrl: item.flags.svg || '-',

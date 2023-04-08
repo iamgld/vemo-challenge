@@ -5,8 +5,8 @@
 
 	&__column {
 		display: grid;
-		grid-template-columns: 400px 1fr;
-		gap: styles.spacing(s);
+		grid-template-columns: 450px 1fr;
+		gap: styles.spacing(xxs);
 		// height: calc(100vh - 76px);
 		padding: styles.spacing(xxs) !important;
 	}

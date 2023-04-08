@@ -5,4 +5,8 @@
 	grid-template-columns: 1fr;
 	gap: styles.spacing(xxs);
 	margin-bottom: styles.spacing(xxs);
+
+	&__chart {
+		cursor: pointer;
+	}
 }
