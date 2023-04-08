@@ -9,7 +9,7 @@
 		<!-- Label & Actions -->
 		<section class="chart__actions">
 			<p class="chart__label" [class.chart__label--expands]="chartExpands">
-				5 most populated countries
+				5 Most populated countries
 			</p>
 			<button
 				nbButton
@@ -24,7 +24,13 @@
 
 		<!-- Chart -->
 		<section class="chart__canvas">
-			<canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
+			<canvas
+				baseChart
+				[data]="barChartData"
+				[options]="barChartOptions"
+				[type]="barChartType"
+				[plugins]="barChartPlugins"
+			>
 			</canvas>
 		</section>
 	</nb-card-body>

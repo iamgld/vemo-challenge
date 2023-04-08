@@ -62,27 +62,18 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
 		countries.map((country: Country) => {
 			country.continents.map((continent: string) => {
-				const thisContinentExist = countriesPerContinent.find(
-					(countryPerContinent: CountriesPerContinent) =>
-						countryPerContinent.continent === continent
+				const findCurrentContinent = countriesPerContinent.find(
+					(countriesPerContinent: CountriesPerContinent) =>
+						countriesPerContinent.continent.trim() === continent.trim()
 				)
 
-				if (thisContinentExist) {
-					const findCurrentContinent = countriesPerContinent.find(
-						(countriesPerContinent: CountriesPerContinent) =>
-							countriesPerContinent.continent === continent
-					)
-
-					if (findCurrentContinent) {
-						const countryPerContinent: CountriesPerContinent = {
-							continent,
-							countries: [...findCurrentContinent.countries, country],
-						}
-						const index: number = countriesPerContinent.indexOf(findCurrentContinent)
-						countriesPerContinent[index] = countryPerContinent
-					} else {
-						console.error(`Something went wrong, this continent doesn't exists`)
+				if (findCurrentContinent) {
+					const countryPerContinent: CountriesPerContinent = {
+						continent,
+						countries: [...findCurrentContinent.countries, country],
 					}
+					const index: number = countriesPerContinent.indexOf(findCurrentContinent)
+					countriesPerContinent[index] = countryPerContinent
 				} else {
 					const countryPerContinent: CountriesPerContinent = {
 						continent,
@@ -101,26 +92,19 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
 		countries.map((country: Country) => {
 			country.languages.map((language: CountryLanguage) => {
-				const thisLanguageExist = countriesPerLanguage.find(
+				const findCurrentLanguage = countriesPerLanguage.find(
 					(countryPerLanguage: CountriesPerLanguage) =>
-						countryPerLanguage.language.code === language.code
+						countryPerLanguage.language.code.trim() === language.code.trim()
 				)
-
-				if (thisLanguageExist) {
-					const findCurrentLanguage = countriesPerLanguage.find(
-						(countryPerLanguage: CountriesPerLanguage) =>
-							countryPerLanguage.language.code === language.code
-					)
-					if (findCurrentLanguage) {
-						const countryPerLanguage: CountriesPerLanguage = {
-							language,
-							countries: [...findCurrentLanguage.countries, country],
-						}
-						const index: number = countriesPerLanguage.indexOf(countryPerLanguage)
-						countriesPerLanguage[index] = countryPerLanguage
-					} else {
-						console.error(`Something went wrong, this language doesn't exists`)
+				if (findCurrentLanguage) {
+					const countryPerLanguage: CountriesPerLanguage = {
+						language,
+						countries: [...findCurrentLanguage.countries, country],
 					}
+					const index: number = countriesPerLanguage
+						.map((countryPerLanguage: CountriesPerLanguage) => countryPerLanguage.language.code)
+						.indexOf(countryPerLanguage.language.code)
+					countriesPerLanguage[index] = countryPerLanguage
 				} else {
 					const countryPerLanguage: CountriesPerLanguage = {
 						language,
@@ -130,16 +114,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
 				}
 			})
 		})
-
-		// let countCountries = 0
-		// countriesPerLanguage.map((item: any) => {
-		// 	console.log('language', item.language, item.countries.length)
-		// 	item.countries.map((country: any) => {
-		// 		countCountries = countCountries + 1
-		// 	})
-		// })
-
-		// console.log('countCountries', countCountries)
 
 		return countriesPerLanguage
 	}

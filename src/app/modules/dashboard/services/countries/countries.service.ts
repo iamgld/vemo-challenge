@@ -40,7 +40,7 @@ export class CountriesService {
 						const buildCountryLanguages = (): void => {
 							let countryLanguage: CountryLanguage = {
 								code: '-',
-								name: 'unknown',
+								name: 'unknown language',
 							}
 							if (item.languages) {
 								Object.entries(item.languages).map(([key, value]: [string, any]) => {

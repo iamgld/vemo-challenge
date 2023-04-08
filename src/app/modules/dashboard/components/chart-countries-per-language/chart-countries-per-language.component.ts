@@ -25,11 +25,13 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 	chart: BaseChartDirective | undefined
 	isLoading = true
 
+	pieChartType: ChartType = 'pie'
+	pieChartPlugins = [DatalabelsPlugin]
 	pieChartOptions: ChartConfiguration['options'] = {
 		plugins: {
 			legend: {
 				display: true,
-				position: 'left',
+				position: 'top',
 			},
 		},
 	}
@@ -37,11 +39,28 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 		labels: [],
 		datasets: [],
 	}
-	pieChartType: ChartType = 'pie'
-	pieChartPlugins = [DatalabelsPlugin]
+
+	barChartType: ChartType = 'bar'
+	barChartPlugins = [DatalabelsPlugin]
+	barChartOptions: ChartConfiguration['options'] = {
+		indexAxis: 'y',
+		scales: {
+			x: {},
+			y: {},
+		},
+		plugins: {
+			legend: {
+				position: 'top',
+			},
+		},
+	}
+	barChartData: ChartData<'bar'> = {
+		labels: [],
+		datasets: [],
+	}
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(2000)
+	private _countdown$ = timer(1500)
 
 	constructor(private _dialog: NbDialogService) {}
 
@@ -61,54 +80,56 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 	}
 
 	private _buildChartData(countriesPerLanguage: CountriesPerLanguage[]) {
-		// Update chart data
-		const updatePieChartData = (countriesPerLanguage: CountriesPerLanguage[]) => {
-			this.pieChartData = {
-				labels: [
-					...countriesPerLanguage.map(
-						(countryPerLanguage: CountriesPerLanguage) => countryPerLanguage.language.name
-					),
-				],
-				datasets: [
-					{
-						data: [
-							...countriesPerLanguage.map(
-								(countryPerContinent: CountriesPerLanguage) => countryPerContinent.countries.length
-							),
-						],
-						label: 'Languages',
-						backgroundColor: '#A16EFF',
-						borderColor: '#1B1B39',
-						hoverBorderColor: '#3CD78F',
-						hoverBackgroundColor: '#1B1B39',
-						borderWidth: 2,
-					},
-				],
-			}
-		}
-
-		// Show legends when charts was expanded
-		if (this.chartExpands) {
-			this.pieChartOptions = {
-				...this.pieChartOptions,
-				plugins: {
-					legend: {
-						display: true,
-						position: 'top',
-					},
+		// Update Bar Chart
+		const sortedByLanguageWithMostCountries = countriesPerLanguage.sort(
+			(a: CountriesPerLanguage, b: CountriesPerLanguage) => b.countries.length - a.countries.length
+		)
+		const fiveLanguageWithMostCountries = sortedByLanguageWithMostCountries.slice(0, 5)
+		this.barChartData = {
+			labels: [
+				...fiveLanguageWithMostCountries.map(
+					(countriesPerLanguage: CountriesPerLanguage) => countriesPerLanguage.language.name
+				),
+			],
+			datasets: [
+				{
+					data: [
+						...fiveLanguageWithMostCountries.map(
+							(countriesPerLanguage: CountriesPerLanguage) => countriesPerLanguage.countries.length
+						),
+					],
+					label: 'Countries',
+					borderRadius: 8,
+					backgroundColor: '#A16EFF',
+					borderColor: '#1B1B39',
+					hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#1B1B39',
+					borderWidth: 2,
 				},
-			}
-			this.pieChartPlugins = []
-			updatePieChartData(countriesPerLanguage)
-		} else {
-			// pieChartPlugins = [DatalabelsPlugin]
-			const sortedByLanguageWithMostCountries = countriesPerLanguage.sort(
-				(a: CountriesPerLanguage, b: CountriesPerLanguage) =>
-					b.countries.length - a.countries.length
-			)
-			const fiveLanguageWithMostCountries = sortedByLanguageWithMostCountries.slice(0, 5)
-
-			updatePieChartData(fiveLanguageWithMostCountries)
+			],
+		}
+		// Update Pie Chart
+		this.pieChartData = {
+			labels: [
+				...countriesPerLanguage.map(
+					(countryPerLanguage: CountriesPerLanguage) => countryPerLanguage.language.name
+				),
+			],
+			datasets: [
+				{
+					data: [
+						...countriesPerLanguage.map(
+							(countryPerContinent: CountriesPerLanguage) => countryPerContinent.countries.length
+						),
+					],
+					label: 'Countries',
+					backgroundColor: '#A16EFF',
+					borderColor: '#1B1B39',
+					hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#1B1B39',
+					borderWidth: 2,
+				},
+			],
 		}
 		// Automatically disbale loader
 		this._countdown$.subscribe({ next: () => (this.isLoading = false) })

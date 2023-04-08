@@ -8,8 +8,11 @@
 	<nb-card-body class="chart__body">
 		<!-- Label & Actions -->
 		<section class="chart__actions">
-			<p class="chart__label" [class.chart__label--expands]="chartExpands">
-				countries per language
+			<p *ngIf="chartExpands" class="chart__label" [class.chart__label--expands]="chartExpands">
+				Countries per language
+			</p>
+			<p *ngIf="!chartExpands" class="chart__label" [class.chart__label--expands]="chartExpands">
+				5 Most used languages
 			</p>
 			<button
 				nbButton
@@ -18,17 +21,17 @@
 				*ngIf="!chartExpands"
 				(click)="openDialog(DialogChartsName.languages)"
 			>
-				<nb-icon icon="expand-outline"></nb-icon>expand
+				<nb-icon icon="expand-outline"></nb-icon>view pie
 			</button>
 		</section>
 		<!-- Chart -->
 		<section class="chart__canvas">
 			<canvas
 				baseChart
-				[data]="pieChartData"
-				[type]="pieChartType"
-				[options]="pieChartOptions"
-				[plugins]="pieChartPlugins"
+				[data]="chartExpands ? pieChartData : barChartData"
+				[type]="chartExpands ? pieChartType : barChartType"
+				[options]="chartExpands ? pieChartOptions : barChartOptions"
+				[plugins]="chartExpands ? pieChartPlugins : barChartPlugins"
 			>
 			</canvas>
 		</section>

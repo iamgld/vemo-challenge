@@ -24,6 +24,8 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	@ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined
 	isLoading = true
 
+	barChartType: ChartType = 'bar'
+	barChartPlugins = [DataLabelsPlugin]
 	barChartOptions: ChartConfiguration['options'] = {
 		indexAxis: 'y',
 		scales: {
@@ -36,16 +38,13 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 			},
 		},
 	}
-	barChartType: ChartType = 'bar'
-	barChartPlugins = [DataLabelsPlugin]
-
 	barChartData: ChartData<'bar'> = {
 		labels: [],
 		datasets: [],
 	}
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(2000)
+	private _countdown$ = timer(1500)
 
 	constructor(private _dialog: NbDialogService) {}
 

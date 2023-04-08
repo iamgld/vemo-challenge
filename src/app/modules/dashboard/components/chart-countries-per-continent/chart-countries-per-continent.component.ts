@@ -25,6 +25,8 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 	chart: BaseChartDirective | undefined
 	isLoading = true
 
+	pieChartType: ChartType = 'pie'
+	pieChartPlugins = [DatalabelsPlugin]
 	pieChartOptions: ChartConfiguration['options'] = {
 		plugins: {
 			legend: {
@@ -37,11 +39,9 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 		labels: [],
 		datasets: [],
 	}
-	pieChartType: ChartType = 'pie'
-	pieChartPlugins = [DatalabelsPlugin]
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(2000)
+	private _countdown$ = timer(1500)
 
 	constructor(private _dialog: NbDialogService) {}
 
