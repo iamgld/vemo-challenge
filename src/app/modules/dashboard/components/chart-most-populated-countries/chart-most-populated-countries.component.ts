@@ -50,6 +50,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['countries'] && changes['countries'].currentValue.length) {
+			this.isLoading = true
 			this._buildChartData(changes['countries'].currentValue)
 		}
 	}

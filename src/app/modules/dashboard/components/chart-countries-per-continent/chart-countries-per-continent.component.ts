@@ -47,6 +47,7 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['countriesPerContinent'] && changes['countriesPerContinent'].currentValue.length) {
+			this.isLoading = true
 			this._buildChartData(changes['countriesPerContinent'].currentValue)
 		}
 	}

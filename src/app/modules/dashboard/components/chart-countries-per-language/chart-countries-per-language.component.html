@@ -1,5 +1,6 @@
 <nb-card
 	class="chart"
+	accent="success"
 	nbSpinnerStatus="success"
 	nbSpinnerSize="giant"
 	[nbSpinner]="isLoading"
@@ -9,7 +10,7 @@
 		<!-- Label & Actions -->
 		<section class="chart__actions">
 			<p *ngIf="chartExpands" class="chart__label" [class.chart__label--expands]="chartExpands">
-				Countries per language
+				Countries per languages
 			</p>
 			<p *ngIf="!chartExpands" class="chart__label" [class.chart__label--expands]="chartExpands">
 				5 Most used languages
@@ -18,6 +19,7 @@
 				nbButton
 				outline
 				status="primary"
+				size="small"
 				*ngIf="!chartExpands"
 				(click)="openDialog(DialogChartsName.languages)"
 			>

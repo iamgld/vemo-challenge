@@ -8,10 +8,8 @@ import { Country } from '@shared/models'
 // Nebular Imports
 import {
 	NbDialogService,
-	NbGlobalLogicalPosition,
 	NbSortDirection,
 	NbSortRequest,
-	NbToastrService,
 	NbTreeGridDataSource,
 	NbTreeGridDataSourceBuilder,
 } from '@nebular/theme'
@@ -19,7 +17,7 @@ import {
 import { Store } from '@ngrx/store'
 import { getFilteredCountries } from '@store/selectors'
 // Thirdparty Imports
-import { Subject } from 'rxjs'
+import { Subject, takeUntil } from 'rxjs'
 
 interface TreeNode<T> {
 	data: T
@@ -47,32 +45,37 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	sortColumn: string = ''
 	sortDirection: NbSortDirection = NbSortDirection.NONE
 
-	private _destroy$ = new Subject()
+	private _destroy$ = new Subject<void>()
 
 	constructor(
 		private _dialog: NbDialogService,
 		private _dataSourceBuilder: NbTreeGridDataSourceBuilder<Country>,
 		private _countries: CountriesService,
-		private _store: Store,
-		private _toastr: NbToastrService
+		private _store: Store
 	) {}
 
 	ngOnInit(): void {
-		this._store.select(getFilteredCountries).subscribe({
-			next: (countriesFiltered: Country[]) => {
-				if (countriesFiltered.length) {
-					this._updateDataSource(countriesFiltered)
-				}
-			},
-		})
+		this._store
+			.select(getFilteredCountries)
+			.pipe(takeUntil(this._destroy$))
+			.subscribe({
+				next: (countriesFiltered: Country[]) => {
+					if (countriesFiltered.length) {
+						this._updateDataSource(countriesFiltered)
+					}
+				},
+			})
 
 		this._countries.getAllCountries().subscribe({
 			next: (countries: Country[]) => {
 				// console.log('countries', countries)
+				this.isLoading = false
 			},
 			error: (error) => {
+				console.error(error)
+			},
+			complete: () => {
 				this.isLoading = false
-				// throw new Error(error)
 			},
 		})
 	}
@@ -95,12 +98,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	}
 
 	openDialog(country: Country) {
-		const dialogRef = this._dialog.open(DialogCountryComponent, {})
-		dialogRef.onClose.subscribe({
-			next: () => {
-				console.log('closed')
-			},
-		})
+		this._dialog.open(DialogCountryComponent, {})
 	}
 
 	private _updateDataSource(countries: Country[]) {
@@ -115,12 +113,5 @@ export class DatatableComponent implements OnInit, OnDestroy {
 		})
 		this.dataSource = this._dataSourceBuilder.create(dataSource)
 		this.isLoading = false
-		this._toastr.success('Countries was updated successfully', `${dataSource.length} countries`, {
-			duration: 5000,
-			destroyByClick: true,
-			preventDuplicates: true,
-			position: NbGlobalLogicalPosition.BOTTOM_END,
-			icon: 'globe-2-outline',
-		})
 	}
 }

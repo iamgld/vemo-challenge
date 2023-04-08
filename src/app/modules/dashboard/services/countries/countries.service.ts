@@ -9,17 +9,18 @@ import { Store } from '@ngrx/store'
 import { INITIALIZE_COUNTRIES } from '@store/actions'
 // Thirdparty Imports
 import { map, tap } from 'rxjs'
+import { NbGlobalLogicalPosition, NbToastrService } from '@nebular/theme'
 
 @Injectable()
 export class CountriesService {
-	constructor(private _http: HttpClient, private _store: Store) {}
+	constructor(private _http: HttpClient, private _store: Store, private _toastr: NbToastrService) {}
 
 	getAllCountries() {
 		const headers = new HttpHeaders({})
 
 		return this._http.get(`${environment.countries.apiUrl}/all`, { headers }).pipe(
 			map((response: any) => {
-				console.log('response', response)
+				// console.log('response', response)
 
 				const countries: Country[] = []
 
@@ -72,6 +73,17 @@ export class CountriesService {
 			}),
 			tap((countries: Country[]) => {
 				this._store.dispatch(INITIALIZE_COUNTRIES({ countries }))
+				this._toastr.success(
+					'Countries was updated successfully',
+					`${countries.length} countries`,
+					{
+						duration: 3000,
+						destroyByClick: true,
+						preventDuplicates: true,
+						position: NbGlobalLogicalPosition.BOTTOM_END,
+						icon: 'globe-2-outline',
+					}
+				)
 			})
 		)
 	}

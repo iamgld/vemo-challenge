@@ -1,5 +1,6 @@
 <nb-card
 	class="chart"
+	accent="success"
 	nbSpinnerStatus="success"
 	nbSpinnerSize="giant"
 	[nbSpinner]="isLoading"
@@ -15,6 +16,7 @@
 				nbButton
 				outline
 				status="primary"
+				size="small"
 				*ngIf="!chartExpands"
 				(click)="openDialog(DialogChartsName.mostPopulated)"
 			>

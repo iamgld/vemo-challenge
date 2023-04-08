@@ -66,6 +66,7 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['countriesPerLanguage'] && changes['countriesPerLanguage'].currentValue.length) {
+			this.isLoading = true
 			this._buildChartData(changes['countriesPerLanguage'].currentValue)
 		}
 	}
