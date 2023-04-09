@@ -6,24 +6,13 @@ import { CountriesService } from '@dashboard/services'
 // Shared Imports
 import { Country, CountryCurrency, CountryLanguage } from '@shared/models'
 // Thirdparty Imports
-import {
-	Observable,
-	of,
-	map,
-	startWith,
-	debounceTime,
-	distinctUntilChanged,
-	Subject,
-	tap,
-	switchMap,
-	takeUntil,
-	timer,
-	filter,
-} from 'rxjs'
+import { map, debounceTime, distinctUntilChanged, Subject, tap, takeUntil, timer } from 'rxjs'
 // Store Imports
 import { Store } from '@ngrx/store'
 import { getOriginalCountries } from '@store/selectors'
 import { CLEAR_FILTER_COUNTRIES, FILTER_COUNTRIES } from '@store/actions'
+// Nebular Imports
+import { NbThemeService } from '@nebular/theme'
 
 export interface Group {
 	name: string
@@ -38,15 +27,18 @@ export interface Group {
 export class HeaderComponent implements OnInit, OnDestroy {
 	isLoadingRefresh = false
 	isLoadingSearch = false
-	// groups: Group[] = []
-	// filteredGroups$!: Observable<Group[]>
 	countries: Country[] = []
 	inputFormControl: FormControl = new FormControl('')
+	toggleFormControl = new FormControl(false)
 
 	private _destroy$ = new Subject<void>()
 	private _countdown$ = timer(750)
 
-	constructor(private _store: Store, private _countries: CountriesService) {}
+	constructor(
+		private _store: Store,
+		private _countries: CountriesService,
+		private _theme: NbThemeService
+	) {}
 
 	ngOnInit() {
 		this._store
@@ -81,6 +73,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					this._countdown$.subscribe({ next: () => (this.isLoadingSearch = false) })
 				},
 			})
+
+		this.toggleFormControl.valueChanges
+			.pipe(
+				takeUntil(this._destroy$),
+				map((value: boolean | null) => (value ? true : false)),
+				tap((active: boolean) => {
+					if (active) {
+						this._theme.changeTheme('cosmic')
+					} else {
+						this._theme.changeTheme('default')
+					}
+				})
+			)
+			.subscribe()
 	}
 
 	ngOnDestroy(): void {

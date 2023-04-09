@@ -12,6 +12,7 @@ import {
 	NbInputModule,
 	NbButtonModule,
 	NbIconModule,
+	NbToggleModule,
 } from '@nebular/theme'
 import { NbEvaIconsModule } from '@nebular/eva-icons'
 
@@ -26,6 +27,7 @@ const exportModules = [
 	NbInputModule,
 	NbButtonModule,
 	NbIconModule,
+	NbToggleModule,
 ]
 
 @NgModule({

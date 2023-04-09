@@ -26,7 +26,7 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 	isLoading = true
 
 	pieChartType: ChartType = 'pie'
-	pieChartPlugins = [DatalabelsPlugin]
+	pieChartPlugins = []
 	pieChartOptions: ChartConfiguration['options'] = {
 		plugins: {
 			legend: {
@@ -41,7 +41,7 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 	}
 
 	barChartType: ChartType = 'bar'
-	barChartPlugins = [DatalabelsPlugin]
+	barChartPlugins = []
 	barChartOptions: ChartConfiguration['options'] = {
 		indexAxis: 'y',
 		scales: {

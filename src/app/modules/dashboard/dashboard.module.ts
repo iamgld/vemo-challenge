@@ -41,7 +41,7 @@ const chartsConfig: NgChartsConfiguration = {
 	generateColors: true,
 	defaults: {
 		font: { size: 11, family: "'Roboto', sans-serif" },
-		color: '#1B1B39',
+		color: '#A16EFF',
 		borderColor: '#1B1B39',
 		responsive: true,
 	},

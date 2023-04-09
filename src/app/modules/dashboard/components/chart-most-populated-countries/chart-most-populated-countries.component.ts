@@ -25,7 +25,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	isLoading = true
 
 	pieChartType: ChartType = 'pie'
-	pieChartPlugins = [DataLabelsPlugin]
+	pieChartPlugins = []
 	pieChartOptions: ChartConfiguration['options'] = {
 		plugins: {
 			legend: {
@@ -40,7 +40,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	}
 
 	barChartType: ChartType = 'bar'
-	barChartPlugins = [DataLabelsPlugin]
+	barChartPlugins = []
 	barChartOptions: ChartConfiguration['options'] = {
 		indexAxis: 'y',
 		scales: {
