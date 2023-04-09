@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	isLoadingSearch = false
 	countries: Country[] = []
 	inputFormControl: FormControl = new FormControl('')
-	toggleFormControl = new FormControl(false)
+	toggleFormControl = new FormControl(true)
 
 	private _destroy$ = new Subject<void>()
 	private _countdown$ = timer(750)
