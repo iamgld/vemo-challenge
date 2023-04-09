@@ -1,4 +1,5 @@
 <article class="header">
+	<!-- Actions -->
 	<section class="header__actions">
 		<a
 			nbButton
@@ -31,23 +32,13 @@
 			<nb-icon icon="external-link-outline"></nb-icon>linkedin
 		</a>
 	</section>
+	<!-- Search -->
 	<section class="header__search">
-		<!-- Autocomplete -->
-		<nb-autocomplete #auto>
-			<nb-option-group
-				*ngFor="let group of filteredGroups$ | async; trackBy: trackByFn"
-				[title]="group.name"
-			>
-				<nb-option *ngFor="let option of group.children" [value]="option">
-					{{ option }}
-				</nb-option>
-			</nb-option-group>
-		</nb-autocomplete>
+		<!-- Input -->
 		<input
 			nbInput
 			type="text"
-			placeholder="type name, country, capital, continent"
-			[nbAutocomplete]="auto"
+			placeholder="type name, capital, continent, currencies, languages"
 			[formControl]="inputFormControl"
 		/>
 
@@ -56,12 +47,13 @@
 			<button
 				nbButton
 				outline
-				status="success"
+				status="danger"
 				size="small"
-				nbSpinnerStatus="success"
+				nbSpinnerStatus="danger"
 				[nbSpinner]="isLoadingSearch"
+				(click)="onClearFilter()"
 			>
-				<nb-icon icon="search-outline"></nb-icon>search
+				<nb-icon icon="funnel-outline"></nb-icon>clear
 			</button>
 			<button
 				nbButton

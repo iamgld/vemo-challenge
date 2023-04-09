@@ -73,8 +73,6 @@ export class DatatableComponent implements OnInit, OnDestroy {
 			},
 			error: (error) => {
 				console.error(error)
-			},
-			complete: () => {
 				this.isLoading = false
 			},
 		})
