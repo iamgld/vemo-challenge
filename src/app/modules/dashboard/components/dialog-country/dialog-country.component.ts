@@ -16,7 +16,7 @@ export class DialogCountryComponent {
 	isLoading = false
 	country: Country | null = null
 
-	private _countdown$ = timer(1000)
+	private _countdown$ = timer(750)
 
 	constructor(private dialogRef: NbDialogRef<Country>) {
 		this.isLoading = true
