@@ -25,6 +25,13 @@ interface TreeNode<T> {
 	expanded?: boolean
 }
 
+interface DataSourceCountry extends Country {
+	currency: string
+	language: string
+	continent: string
+	capital: string
+}
+
 @Component({
 	selector: 'app-datatable',
 	templateUrl: './datatable.component.html',
@@ -34,14 +41,14 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	isLoading = true
 	allColumns: string[] = [
 		'name',
-		'capitals',
-		'currencies',
-		'continents',
-		'languages',
+		'capital',
+		'currency',
+		'continent',
+		'language',
 		'population',
 		'flag',
 	]
-	dataSource!: NbTreeGridDataSource<Country>
+	dataSource!: NbTreeGridDataSource<DataSourceCountry>
 	sortColumn: string = ''
 	sortDirection: NbSortDirection = NbSortDirection.NONE
 
@@ -49,7 +56,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private _dialog: NbDialogService,
-		private _dataSourceBuilder: NbTreeGridDataSourceBuilder<Country>,
+		private _dataSourceBuilder: NbTreeGridDataSourceBuilder<DataSourceCountry>,
 		private _countries: CountriesService,
 		private _store: Store
 	) {}
@@ -104,10 +111,17 @@ export class DatatableComponent implements OnInit, OnDestroy {
 	}
 
 	private _updateDataSource(countries: Country[]) {
-		const dataSource: TreeNode<Country>[] = []
+		const dataSource: TreeNode<DataSourceCountry>[] = []
 		countries.map((country: Country) => {
-			const data: TreeNode<Country> = {
-				data: country,
+			const dataSourceCountry: DataSourceCountry = {
+				...country,
+				currency: country.currencies[0].name,
+				language: country.languages[0].name,
+				continent: country.continents[0],
+				capital: country.capitals[0],
+			}
+			const data: TreeNode<DataSourceCountry> = {
+				data: dataSourceCountry,
 				children: [],
 				expanded: false,
 			}

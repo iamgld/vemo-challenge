@@ -1,5 +1,9 @@
 @use 'styles' as styles;
 
+nb-card-body {
+	--card-padding: 0;
+}
+
 .table {
 	min-height: 400px;
 }

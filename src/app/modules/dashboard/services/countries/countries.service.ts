@@ -31,7 +31,7 @@ export class CountriesService {
 						const buildCurrencyPerCountry = (): void => {
 							let countryCurrency: CountryCurrency = {
 								code: '-',
-								name: 'unknown language',
+								name: 'unknown currency',
 							}
 							if (item.currencies) {
 								Object.entries(item.currencies).map(([key, value]: [string, any]) => {
@@ -61,7 +61,7 @@ export class CountriesService {
 
 						const country: Country = {
 							name: item.name.common || '-',
-							capitals: item.capital || ['-'],
+							capitals: item.capital || ['unknown capital'],
 							currencies: countryCurrencies,
 							continents: item.continents || ['-'],
 							languages: countryLanguages,
