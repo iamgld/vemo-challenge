@@ -24,6 +24,21 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	@ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined
 	isLoading = true
 
+	pieChartType: ChartType = 'pie'
+	pieChartPlugins = [DataLabelsPlugin]
+	pieChartOptions: ChartConfiguration['options'] = {
+		plugins: {
+			legend: {
+				display: true,
+				position: 'left',
+			},
+		},
+	}
+	pieChartData: ChartData<'pie', number[], string | string[]> = {
+		labels: [],
+		datasets: [],
+	}
+
 	barChartType: ChartType = 'bar'
 	barChartPlugins = [DataLabelsPlugin]
 	barChartOptions: ChartConfiguration['options'] = {
@@ -44,7 +59,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	}
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(1000)
+	private _countdown$ = timer(750)
 
 	constructor(private _dialog: NbDialogService) {}
 
@@ -65,7 +80,7 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 	}
 
 	private _buildChartData(countries: Country[]) {
-		// Update chart data
+		// Update Bar Chart
 		this.barChartData = {
 			labels: [...countries.map((country: Country) => country.name)],
 			datasets: [
@@ -75,8 +90,23 @@ export class ChartMostPopulatedCountriesComponent implements OnChanges {
 					borderRadius: 8,
 					backgroundColor: '#A16EFF',
 					borderColor: '#1B1B39',
-					hoverBorderColor: '#3CD78F',
-					hoverBackgroundColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
+					borderWidth: 2,
+				},
+			],
+		}
+		// Update Pie Chart
+		this.pieChartData = {
+			labels: [...countries.map((country: Country) => country.name)],
+			datasets: [
+				{
+					data: [...countries.map((country: Country) => country.population)],
+					label: 'Countries',
+					backgroundColor: '#A16EFF',
+					borderColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
 					borderWidth: 2,
 				},
 			],

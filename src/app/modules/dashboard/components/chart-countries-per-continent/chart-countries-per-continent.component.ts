@@ -40,8 +40,27 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 		datasets: [],
 	}
 
+	barChartType: ChartType = 'bar'
+	barChartPlugins = [DatalabelsPlugin]
+	barChartOptions: ChartConfiguration['options'] = {
+		indexAxis: 'y',
+		scales: {
+			x: {},
+			y: {},
+		},
+		plugins: {
+			legend: {
+				position: 'top',
+			},
+		},
+	}
+	barChartData: ChartData<'bar'> = {
+		labels: [],
+		datasets: [],
+	}
+
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(1000)
+	private _countdown$ = timer(750)
 
 	constructor(private _dialog: NbDialogService) {}
 
@@ -62,7 +81,36 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 	}
 
 	private _buildChartData(countriesPerContinent: CountriesPerContinent[]) {
-		// Update chart data
+		// Update Bar Chart
+		const sortedByContinentsWithMostCountries = countriesPerContinent.sort(
+			(a: CountriesPerContinent, b: CountriesPerContinent) =>
+				b.countries.length - a.countries.length
+		)
+		this.barChartData = {
+			labels: [
+				...sortedByContinentsWithMostCountries.map(
+					(countriesPerContinent: CountriesPerContinent) => countriesPerContinent.continent
+				),
+			],
+			datasets: [
+				{
+					data: [
+						...sortedByContinentsWithMostCountries.map(
+							(countriesPerContinent: CountriesPerContinent) =>
+								countriesPerContinent.countries.length
+						),
+					],
+					label: 'Countries',
+					borderRadius: 8,
+					backgroundColor: '#A16EFF',
+					borderColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
+					borderWidth: 2,
+				},
+			],
+		}
+		// Update Pie Chart
 		this.pieChartData = {
 			labels: [
 				...countriesPerContinent.map(
@@ -79,8 +127,8 @@ export class ChartCountriesPerContinentComponent implements OnChanges {
 					label: 'Countries',
 					backgroundColor: '#A16EFF',
 					borderColor: '#1B1B39',
-					hoverBorderColor: '#3CD78F',
-					hoverBackgroundColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
 					borderWidth: 2,
 				},
 			],

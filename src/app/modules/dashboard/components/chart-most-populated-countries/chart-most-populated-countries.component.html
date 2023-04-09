@@ -20,7 +20,7 @@
 				*ngIf="!chartExpands"
 				(click)="openDialog(DialogChartsName.mostPopulated)"
 			>
-				<nb-icon icon="expand-outline"></nb-icon>expand
+				<nb-icon icon="expand-outline"></nb-icon>view pie chart
 			</button>
 		</section>
 
@@ -28,10 +28,10 @@
 		<section class="chart__canvas">
 			<canvas
 				baseChart
-				[data]="barChartData"
-				[options]="barChartOptions"
-				[type]="barChartType"
-				[plugins]="barChartPlugins"
+				[data]="chartExpands ? pieChartData : barChartData"
+				[type]="chartExpands ? pieChartType : barChartType"
+				[options]="chartExpands ? pieChartOptions : barChartOptions"
+				[plugins]="chartExpands ? pieChartPlugins : barChartPlugins"
 			>
 			</canvas>
 		</section>

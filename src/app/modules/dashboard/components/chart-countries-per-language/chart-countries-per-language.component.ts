@@ -60,7 +60,7 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 	}
 
 	readonly DialogChartsName = DialogChartsName
-	private _countdown$ = timer(1000)
+	private _countdown$ = timer(750)
 
 	constructor(private _dialog: NbDialogService) {}
 
@@ -103,8 +103,8 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 					borderRadius: 8,
 					backgroundColor: '#A16EFF',
 					borderColor: '#1B1B39',
-					hoverBorderColor: '#3CD78F',
-					hoverBackgroundColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
 					borderWidth: 2,
 				},
 			],
@@ -126,8 +126,8 @@ export class ChartCountriesPerLanguageComponent implements OnChanges {
 					label: 'Countries',
 					backgroundColor: '#A16EFF',
 					borderColor: '#1B1B39',
-					hoverBorderColor: '#3CD78F',
-					hoverBackgroundColor: '#1B1B39',
+					// hoverBorderColor: '#3CD78F',
+					hoverBackgroundColor: '#3CD78F',
 					borderWidth: 2,
 				},
 			],

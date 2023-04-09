@@ -22,7 +22,7 @@ import { NbThemeModule, NbDialogModule, NbToastrModule } from '@nebular/theme'
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		// Nebular Theme
-		NbThemeModule.forRoot({ name: 'cosmic' }),
+		NbThemeModule.forRoot({ name: 'default' }),
 		NbDialogModule.forRoot({}),
 		NbToastrModule.forRoot({}),
 		// Store (NGRX)
